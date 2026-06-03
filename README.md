@@ -17,7 +17,7 @@ The site is a collection of games and fun activities. The main page lists all th
 
 | Game | Description |
 |------|-------------|
-| _(more coming soon)_ | |
+| [Crack the Code!](/games/crack-the-code/) | Solve math problems to decode a secret message, then print it as a worksheet. |
 
 ## Development
 

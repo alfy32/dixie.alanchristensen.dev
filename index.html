@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dixie's Page</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #dbeafe;
+      margin: 0;
+      padding: 32px 20px;
+    }
+
+    .header {
+      text-align: center;
+      max-width: 620px;
+      margin: 0 auto 36px;
+    }
+
+    .header h1 {
+      font-size: 42px;
+      color: #1e40af;
+      margin: 0 0 10px;
+    }
+
+    .header p {
+      font-size: 16px;
+      color: #4b5563;
+      margin: 0;
+    }
+
+    .games-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .games-list li a {
+      display: block;
+      background: white;
+      border-radius: 14px;
+      padding: 22px 28px;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+
+    .games-list li a:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.14);
+      transform: translateY(-2px);
+    }
+
+    .game-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #1e40af;
+      margin-bottom: 4px;
+    }
+
+    .game-desc {
+      font-size: 14px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Dixie's Page</h1>
+  <p>Games and fun things, just for Dixie!</p>
+</div>
+
+<ul class="games-list">
+  <li>
+    <a href="/games/crack-the-code/">
+      <div class="game-title">Crack the Code!</div>
+      <div class="game-desc">Solve math problems to decode a secret message, then print it as a worksheet.</div>
+    </a>
+  </li>
+</ul>
+
+</body>
+</html>
