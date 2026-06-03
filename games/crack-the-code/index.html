@@ -130,7 +130,7 @@
     #worksheet {
       display: none;
       background: white;
-      padding: 36px 40px;
+      padding: 32px 36px;
       max-width: 820px;
       margin: 0 auto;
       border-radius: 10px;
@@ -141,78 +141,52 @@
 
     .ws-title {
       text-align: center;
-      font-size: 44px;
+      font-size: 36px;
       font-weight: bold;
       color: #1e40af;
-      margin-bottom: 28px;
+      margin-bottom: 20px;
       letter-spacing: 1px;
     }
 
-    /* ── Two-column body ── */
-    .ws-body {
-      display: flex;
-      gap: 28px;
-      align-items: flex-start;
-    }
-
-    /* ── Cipher sidebar ── */
-    .cipher-sidebar {
-      flex-shrink: 0;
-      width: 88px;
+    /* ── Cipher key (two-row table across the top:
+          numbers on row 1, letters on row 2, column-aligned) ── */
+    .cipher-top {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-rows: auto auto;
+      grid-auto-columns: minmax(22px, 1fr);
       border: 2px solid #1e40af;
-      border-radius: 6px;
+      border-radius: 8px;
       overflow: hidden;
+      margin-bottom: 24px;
     }
 
-    .cipher-sidebar-label {
-      background: #1e40af;
-      color: white;
+    .cipher-top span {
       text-align: center;
-      padding: 7px 2px;
-      font-size: 13px;
+      padding: 6px 3px;
       font-weight: bold;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      border-right: 1px solid #bfdbfe;
     }
 
-    .cipher-entry {
-      display: flex;
-      align-items: center;
+    /* last column gets no trailing divider */
+    .cipher-top span:nth-last-child(-n+2) { border-right: none; }
+
+    .cipher-top .cn {
+      font-size: 14px;
+      color: #1e40af;
       border-bottom: 1px solid #bfdbfe;
     }
 
-    .cipher-entry:last-child { border-bottom: none; }
-
-    .cipher-entry .cn {
-      width: 36px;
-      text-align: center;
-      padding: 6px 2px;
-      font-size: 14px;
-      font-weight: bold;
-      color: #1e40af;
-      background: #eff6ff;
-      border-right: 1px solid #bfdbfe;
-      flex-shrink: 0;
-    }
-
-    .cipher-entry .cl {
-      flex: 1;
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
+    .cipher-top .cl {
+      font-size: 16px;
       color: #111;
-      padding: 6px 2px;
     }
 
-    /* ── Puzzle area ── */
-    .puzzle-area {
-      flex: 1;
-    }
-
+    /* ── Message grid ── */
     .message-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 30px 56px;
+      gap: 28px 52px;
       align-items: flex-start;
     }
 
@@ -221,59 +195,74 @@
       gap: 6px;
     }
 
-    /* ── Letter boxes ── */
+    /* ── Letter boxes ──
+       Use flex-direction:column with flex-basis on each row so heights
+       are rock-solid in print (bare `height` can collapse on empty elements). */
     .letter-box {
-      width: 72px;
+      width: 62px;
       border: 2px solid #374151;
       border-radius: 5px;
       overflow: hidden;
       text-align: center;
+      display: flex;
+      flex-direction: column;
     }
 
     .lb-problem {
-      background: #f0f9ff;
-      border-bottom: 1.5px solid #374151;
-      padding: 5px 2px;
-      font-size: 14px;
+      flex: 0 0 auto;
+      min-height: 26px;
+      border-bottom: 2px solid #374151;
+      padding: 3px 2px;
+      font-size: 13px;
       font-weight: bold;
       color: #111;
-      min-height: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .lb-num {
-      height: 36px;
-      min-height: 36px;
-      border-bottom: 1.5px solid #374151;
-      background: white;
-      overflow: hidden;
+      flex: 0 0 28px;
+      height: 28px;
+      border-bottom: 2px solid #374151;
     }
 
     .lb-letter {
-      height: 64px;
-      min-height: 64px;
-      background: #fafafa;
-      overflow: hidden;
+      flex: 0 0 38px;
+      height: 38px;
     }
 
-    /* ── Scale note (screen only) ── */
-    .scale-note {
-      text-align: center;
-      font-size: 13px;
-      color: #6b7280;
-      margin-top: 10px;
+    /* ── Mobile (screen preview only — print uses page-width, so these
+          max-width rules never apply when printing) ── */
+    @media (max-width: 640px) {
+      body { padding: 10px; }
+      .form-card { padding: 16px 18px; }
+
+      #worksheet { padding: 16px 10px; }
+      .ws-title { font-size: 30px; margin-bottom: 14px; }
+
+      /* let the key shrink all its columns to fit the screen width */
+      .cipher-top { grid-auto-columns: minmax(0, 1fr); margin-bottom: 16px; }
+      .cipher-top span { padding: 4px 1px; }
+      .cipher-top .cn { font-size: 12px; }
+      .cipher-top .cl { font-size: 15px; }
+
+      /* tighter gaps + smaller boxes so word groups fit without scrolling */
+      .message-grid { gap: 16px 20px; }
+      .word-group { gap: 4px; }
+      .letter-box { width: 42px; }
+      .lb-problem { font-size: 11px; min-height: 22px; padding: 2px 1px; }
+      .lb-num { flex-basis: 24px; height: 24px; }
+      .lb-letter { flex-basis: 32px; height: 32px; }
     }
 
     /* ── Print ── */
     @media print {
-      @page { size: letter portrait; margin: 0.5in; }
+      @page { size: 8.5in 11in; margin: 0.6in; }
       body { background: white; padding: 0; margin: 0; }
       .back-link,
       .form-card,
-      .print-row,
-      .scale-note { display: none !important; }
+      .print-row { display: none !important; }
       #worksheet {
         display: block !important;
         box-shadow: none;
@@ -282,7 +271,13 @@
         max-width: 100%;
         width: 100%;
       }
+      /* Fixed box sizes — identical on screen and paper. A long phrase simply
+         flows onto another page (break-inside:avoid keeps each box whole). */
+      .lb-problem { flex: 0 0 auto !important; min-height: 26px !important; }
+      .lb-num     { flex: 0 0 28px !important; height: 28px !important; }
+      .lb-letter  { flex: 0 0 38px !important; height: 38px !important; }
       .word-group { break-inside: avoid; }
+      .letter-box { break-inside: avoid; }
     }
   </style>
 </head>
@@ -334,6 +329,7 @@ function escHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+
 // Rules:
 //   • Prefer both operands single-digit (1–9)
 //   • Fallback: one operand two-digit if target > 18; never both two-digit
@@ -382,17 +378,14 @@ function generate() {
   // Sorted by number for the sidebar display
   const cipherPairs = uniqueLetters.map((ch, i) => [i + 1, ch]).sort((a, b) => a[0] - b[0]);
 
+  const n = uniqueLetters.length;
   const titleVal = document.getElementById('title-input').value.trim() || 'Crack the Code!';
 
-  // ── Cipher sidebar (vertical) ──
-  const sidebarHTML = `
-    <div class="cipher-sidebar">
-      <div class="cipher-sidebar-label">Key</div>
+  // ── Cipher key (two-row table: numbers on top, letters below) ──
+  const cipherTopHTML = `
+    <div class="cipher-top">
       ${cipherPairs.map(([num, letter]) =>
-        `<div class="cipher-entry">
-          <span class="cn">${num}</span>
-          <span class="cl">${letter}</span>
-        </div>`
+        `<span class="cn">${num}</span><span class="cl">${letter}</span>`
       ).join('')}
     </div>`;
 
@@ -415,54 +408,13 @@ function generate() {
 
   document.getElementById('worksheet').innerHTML = `
     <div class="ws-title">${escHtml(titleVal)}</div>
-    <div class="ws-body">
-      ${sidebarHTML}
-      <div class="puzzle-area">${gridHTML}</div>
-    </div>`;
+    ${cipherTopHTML}
+    ${gridHTML}`;
 
   const ws = document.getElementById('worksheet');
   ws.classList.add('visible');
   document.getElementById('print-btn').style.display = 'inline-block';
-  fitToPage(ws);
   ws.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-// Measure content at actual print width, scale down if too tall for one page.
-// Uses CSS `zoom` so layout reflows (unlike transform: scale).
-function fitToPage(ws) {
-  ws.style.zoom = '';
-
-  // Two rAFs: first lets the browser apply the reset, second lets it reflow
-  // at the temporarily-narrowed width we use for measurement.
-  requestAnimationFrame(() => {
-    const PRINT_W = 7.5 * 96;  // 720px — 8.5in minus 0.5in each side
-    const PAGE_H  = 10 * 96;   // 960px — 11in minus 0.5in each side
-
-    const savedMax = ws.style.maxWidth;
-    ws.style.maxWidth = PRINT_W + 'px';
-
-    requestAnimationFrame(() => {
-      const naturalH = ws.scrollHeight;
-      ws.style.maxWidth = savedMax;
-
-      let noteEl = document.getElementById('scale-note');
-      if (!noteEl) {
-        noteEl = document.createElement('div');
-        noteEl.id = 'scale-note';
-        noteEl.className = 'scale-note';
-        ws.after(noteEl);
-      }
-
-      if (naturalH > PAGE_H) {
-        const scale = PAGE_H / naturalH;
-        ws.style.zoom = scale.toFixed(4);
-        noteEl.textContent = `Scaled to ${Math.round(scale * 100)}% to fit one page`;
-      } else {
-        ws.style.zoom = '';
-        noteEl.textContent = '';
-      }
-    });
-  });
 }
 </script>
 </body>
